@@ -51,7 +51,7 @@ GameData game_data;
 
 constexpr auto room_size = glm::ivec2(40, 22);
 constexpr const char* modes[] = {"View", "Edit"};
-int mouse_mode = 0;
+int mouse_mode = 1;
 glm::ivec2 mode0_selection = {-1, -1};
 MapTile mode1_placing;
 
@@ -707,12 +707,12 @@ class {
                 export_map();
             }
         } else {
-            if(ImGui::MenuItem("Export...", "Ctrl+E")) {
+            if(ImGui::MenuItem("Export...##map", "Ctrl+E")) {
                 export_explicit();
             }
         }
 
-        if(ImGui::MenuItem("Export As...", "Ctrl+Shift+E")) {
+        if(ImGui::MenuItem("Export As...##map", "Ctrl+Shift+E")) {
             export_explicit();
         }
     }
@@ -920,7 +920,6 @@ static ImGuiID DockSpaceOverViewport() {
 
             ImGui::BeginDisabled(!game_data.loaded);
             exe_exporter.draw_options();
-            ImGui::EndDisabled();
 
             ImGui::Separator();
 
@@ -952,7 +951,6 @@ static ImGuiID DockSpaceOverViewport() {
                 }
             }
 
-            ImGui::BeginDisabled(!game_data.loaded);
             map_exporter.draw_options();
             ImGui::EndDisabled();
 
@@ -1702,7 +1700,7 @@ int runViewer() {
                 camera.position = -(pos * 8 + 4);
             });
             tile_list.draw(game_data, mode1_placing);
-            tile_viewer.draw(game_data, should_update);
+            tile_viewer.draw(game_data, should_update, mode1_placing);
             DrawPreviewWindow();
 
             if(should_update)

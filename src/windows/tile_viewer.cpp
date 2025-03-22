@@ -107,7 +107,7 @@ bool DrawUvFlags(uv_data& uv) {
     return false;
 }
 
-void TileViewer::draw(GameData& game_data, bool& should_update) {
+void TileViewer::draw(GameData& game_data, bool& should_update, MapTile& mode1_placing) {
     if(!ImGui::Begin("Tile Viewer")) {
         ImGui::End();
         return;
@@ -120,6 +120,10 @@ void TileViewer::draw(GameData& game_data, bool& should_update) {
     selected_tile = std::clamp(selected_tile, 0, (int)game_data.uvs.size() - 1);
 
     auto& uv = game_data.uvs[selected_tile];
+
+    if (ImGui::Button("Select")) {
+        mode1_placing.tile_id = selected_tile;
+    }
 
     ImGui::SeparatorText("Tile Data");
     should_update |= DrawUvFlags(uv);

@@ -19,7 +19,7 @@ class TileViewer {
     int speed = 5;
 
   public:
-    void draw(GameData& game_data, bool& should_update);
+    void draw(GameData& game_data, bool& should_update, MapTile& mode1_placing);
 
     void focus();
 
